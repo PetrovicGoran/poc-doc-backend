@@ -19,7 +19,7 @@
     "http": "0.0.1-security",
     "http-errors": "~1.6.3",
     "ip": "^1.1.5",
-    "mongoose": "^5.9.15",
+    "mongoose": "^5.11.12",
     "morgan": "~1.9.1",
     "path": "^0.12.7"
   }
