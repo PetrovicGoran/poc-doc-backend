@@ -30,6 +30,7 @@ module.exports = {
                 const key = EC.keyFromPrivate(newDoc.private_key, 'hex');
         
                 newDoc.public_key = key.getPublic().encode('hex', false);
+                newDoc.fullName = doctors[i].full_name;
 
                 resl.push(newDoc);
             }
