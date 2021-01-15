@@ -74,5 +74,12 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+
+global.host_http_ip = 'http://92.242.250.210';
+global.host_ip = '92.242.250.210';
+global.host_port_string = ':3001';
+global.host_port_int = 3001;
+
+
 module.exports = app;
 

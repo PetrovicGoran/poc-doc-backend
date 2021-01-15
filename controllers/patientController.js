@@ -6,6 +6,8 @@ var fs = require("fs");
 var path = require('path');
 var ec = require('elliptic').ec;
 var CryptoJS = require('crypto-js');
+const { hostname } = require('os');
+const app = require('../app.js');
 
 const EC = new ec('secp256k1');
 
@@ -98,8 +100,8 @@ module.exports = {
 
 		
 		const options = {
-			hostname: "192.168.18.7",
-			port: 8080,
+			hostname: global.host_ip,
+			port: global.host_port_int,
 			path: "/wallet/newWallet",
 			method: 'POST',
 			headers: {
@@ -125,10 +127,19 @@ module.exports = {
 
                 //console.log(data);
 
+                var medical_number_value = req.body.medical_number;
+                var full_name_value = req.body.full_name;
+
+                if(medical_number_value == null)
+                    medical_number_value = req.body.medicalNumber;
+
+                if(full_name_value == null)
+                    full_name_value = req.body.fullName;
+
                 var patient = new patientModel({
-                    medical_number : req.body.medical_number,
+                    medical_number : medical_number_value,
                     password : req.body.password,
-                    full_name : req.body.full_name,
+                    full_name : full_name_value,
                     phone : req.body.phone,
                     location : req.body.location,
                     private_key: JSON.parse(data).privateKey
@@ -141,7 +152,19 @@ module.exports = {
                             error: err
                         });
                     }
-                    return res.status(201).json(patient);
+                    return res.status(201).json({
+                        _id : patient._id,
+                        id : patient._id,
+                        medical_number : patient.medical_number,
+                        medicalNumber : patient.medical_number,
+                        password : patient.password,
+                        full_name : patient.full_name,
+                        fullName : patient.full_name,
+                        phone : patient.phone,
+                        location : patient.location,
+                        privateKey: patient.private_key,
+                        private_key: patient.private_key
+                    });
                 });
             });
 		});
@@ -223,14 +246,31 @@ module.exports = {
     },
 
     login: function (req, res,next) {
-        patientModel.authenticate(req.body.medical_number, req.body.password, function (error, patient) {
+       
+        var medical_number_value = req.body.medical_number;
+        if(medical_number_value == null)
+                    medical_number_value = req.body.medicalNumber;
+
+        patientModel.authenticate(medical_number_value, req.body.password, function (error, patient) {
         if (error || !patient) {
           var err = new Error('Wrong medical number or password.');
           err.status = 401;
           return next(err);
         } else {
           req.session.patientId = patient._id;
-           return res.status(201).json(patient);
+           return res.status(201).json({
+            _id : patient._id,
+            id : patient._id,
+            medical_number : patient.medical_number,
+            medicalNumber : patient.medical_number,
+            password : patient.password,
+            full_name : patient.full_name,
+            fullName : patient.full_name,
+            phone : patient.phone,
+            location : patient.location,
+            privateKey: patient.private_key,
+            private_key: patient.private_key
+        });
         }
       })
     },
