@@ -42,7 +42,21 @@ module.exports = {
                     error: err
                 });
             }
-            return res.json(messages);
+
+            var resl = [];
+
+            for (var i in messages) {
+                var newMssg = messages[i];
+                if (newMssg.fromDoctor != null ) {
+                    newMssg.status = "received";
+                 } else {
+                    newMssg.status = "sent";
+                 }
+
+                resl.push(newMssg);
+            }
+
+            return res.json(resl);
         });
     },
 
