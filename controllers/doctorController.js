@@ -32,6 +32,7 @@ module.exports = {
                 newDoc.public_key = key.getPublic().encode('hex', false);
                 newDoc.fullName = doctors[i].full_name;
                 newDoc.id = doctors[i]._id;
+                newDoc.publicKey = newDoc.public_key;
 
                 resl.push(newDoc);
             }
