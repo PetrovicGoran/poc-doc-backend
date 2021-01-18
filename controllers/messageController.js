@@ -47,16 +47,16 @@ module.exports = {
 
             for (var i in messages) {
                 var newMssg = messages[i];
-                if (newMssg.fromDoctor != null ) {
+                if (newMssg.fromDoctor != '' && newMssg.fromDoctor != null) {
                     newMssg.status = "received";
-                 } else {
+                 } else if (newMssg.fromPatient != ''){
                     newMssg.status = "sent";
                  }
 
                 resl.push(newMssg);
             }
 
-            return res.json(resl);
+            return res.json(messages);
         });
     },
 
@@ -85,22 +85,30 @@ module.exports = {
      * messageController.create()
      */
     create: function (req, res) {
+        console.log(req.body.receiverId);
         var message;
-        if(req.body.fromPatient != ''){
+        
+        if (req.body.receiverId != null) {
+            message = new messageModel({
+                fromPatient : ObjectId(req.body.sender.id),
+                toDoctor : ObjectId(req.body.receiverId),
+                content : req.body.content
+    
+            });
+        } else if(req.body.fromPatient != ''){
            message = new messageModel({
                 fromPatient : ObjectId(req.body.fromPatient),
                 toDoctor : ObjectId(req.body.toDoctor),
                 content : req.body.content
     
             });
-        }
-        else{
+        } else if (req.body.fromDoctor != '') {
             message = new messageModel({
                 fromDoctor : ObjectId(req.body.fromDoctor),
                 toPatient : ObjectId(req.body.toPatient),
                 content : req.body.content
             });
-        }
+        } 
 
         message.save(function (err, message) {
             if (err) {
