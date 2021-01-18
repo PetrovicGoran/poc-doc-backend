@@ -66,7 +66,6 @@ module.exports = {
 
             var newPat = patient.toObject();
             const key = EC.keyFromPrivate(newPat.private_key, 'hex');
-    
             newPat.public_key = key.getPublic().encode('hex', false);
 
             return res.json(newPat);
@@ -258,6 +257,9 @@ module.exports = {
           return next(err);
         } else {
           req.session.patientId = patient._id;
+
+          const key = EC.keyFromPrivate(patient.private_key, 'hex');
+
            return res.status(201).json({
             _id : patient._id,
             id : patient._id,
@@ -269,7 +271,9 @@ module.exports = {
             phone : patient.phone,
             location : patient.location,
             privateKey: patient.private_key,
-            private_key: patient.private_key
+            private_key: patient.private_key,
+            publicKey : key.getPublic().encode('hex', false),
+            public_key : key.getPublic().encode('hex', false)
         });
         }
       })
