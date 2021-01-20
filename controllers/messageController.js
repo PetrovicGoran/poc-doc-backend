@@ -38,7 +38,7 @@ module.exports = {
         ]).exec(function (err, messages){
             if (err) {
                 return res.status(500).json({
-                    message: 'Error when getting comment.',
+                    message: 'Error when getting messages.',
                     error: err
                 });
             }
@@ -56,7 +56,7 @@ module.exports = {
                 resl.push(newMssg);
             }
 
-            return res.json(messages);
+            return res.json(resl);
         });
     },
 

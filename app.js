@@ -16,6 +16,7 @@ var usersRouter = require('./routes/users');
 var doctorRouter = require('./routes/doctorRoutes');
 var patientRouter = require('./routes/patientRoutes');
 var messageRouter = require('./routes/messageRoutes');
+var predictedConditionRouter = require('./routes/predictedConditionRoutes');
 
 var app = express();
 
@@ -57,6 +58,7 @@ app.use('/users', usersRouter);
 app.use('/patients', patientRouter);
 app.use('/doctors', doctorRouter);
 app.use('/messages', messageRouter);
+app.use('/prediction/', predictedConditionRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
