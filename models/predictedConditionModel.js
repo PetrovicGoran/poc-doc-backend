@@ -17,4 +17,4 @@ var predictedConditionSchema = new Schema({
 	}
 });
 
-module.exports = mongoose.model('predictedCondition', predictedConditionSchema);
+module.exports = mongoose.model('predicted_condition', predictedConditionSchema);
