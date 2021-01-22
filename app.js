@@ -58,7 +58,7 @@ app.use('/users', usersRouter);
 app.use('/patients', patientRouter);
 app.use('/doctors', doctorRouter);
 app.use('/messages', messageRouter);
-app.use('/prediction/', predictedConditionRouter);
+app.use('/prediction', predictedConditionRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
