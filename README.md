@@ -58,7 +58,3 @@ Supported by [Goran Petrovic](https://github.com/PetrovicGoran) - feel free to c
 
 Supported by [Nikola Vilar Jordanovski](https://github.com/NikolaVilar) - feel free to contact him :
 * nikola.vialr@student.um.si
-
-# poc-doc-backend
-Backend part of POC-DOC project (@ FERI)
-Run command: **npm start**
